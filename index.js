@@ -1,10 +1,5 @@
 const weatherApi = "https://api.weather.gov/alerts/active?area=";
 
-const input = document.getElementById("state-input");
-const button = document.getElementById("get-alerts-btn");
-const alertSection = document.getElementById("alerts");
-const errorDiv = document.getElementById("error-message");
-
 // ===============================
 // FETCH WEATHER ALERTS
 // ===============================
@@ -28,8 +23,11 @@ async function fetchWeatherAlerts(state) {
 // DISPLAY ALERTS
 // ===============================
 function displayAlerts(data) {
+    const errorDiv = document.getElementById("error-message");
+    const alertSection = document.getElementById("alerts-display");
+
     errorDiv.textContent = "";
-    errorDiv.style.display = "none";
+    errorDiv.classList.add("hidden");
 
     alertSection.innerHTML = "";
 
@@ -59,25 +57,32 @@ function displayAlerts(data) {
 // DISPLAY ERROR
 // ===============================
 function displayError(message) {
-    alertSection.innerHTML = "";
+    const errorDiv = document.getElementById("error-message");
+    const alertSection = document.getElementById("alerts-display");
 
+    alertSection.innerHTML = "";
     errorDiv.textContent = message;
-    errorDiv.style.display = "block";
+    errorDiv.classList.remove("hidden");
 }
 
 // ===============================
 // BUTTON CLICK EVENT
 // ===============================
-button.addEventListener("click", () => {
-    const state = input.value.trim().toUpperCase();
+document.addEventListener("DOMContentLoaded", () => {
+    const input = document.getElementById("state-input");
+    const button = document.getElementById("fetch-alerts");
 
-    if (!state) {
-        displayError("Please enter a state code");
-        return;
-    }
+    button.addEventListener("click", () => {
+        const state = input.value.trim().toUpperCase();
 
-    fetchWeatherAlerts(state);
-    input.value = "";
+        if (!state) {
+            displayError("Please enter a state code");
+            return;
+        }
+
+        fetchWeatherAlerts(state);
+        input.value = "";
+    });
 });
 
 // ===============================
