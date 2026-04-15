@@ -1,12 +1,3 @@
-	
-3:23 PM
-
-
-
-
-
-
-
 const input = document.getElementById("state-input");
 const button = document.getElementById("fetch-alerts");
 
